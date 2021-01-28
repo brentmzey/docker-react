@@ -1,0 +1,16 @@
+FROM node:alpine
+
+WORKDIR "/app"
+
+COPY package.json .
+RUN npm install --legacy-peer-deps
+
+COPY . . 
+# The above technically needed for dev since we are using volumes
+# (specified in our docker-compose.yml file)
+# to reference any introspection to '/app' inside the 
+# the container to the file system in our local env
+# BUT I will keep it in to simplify if I no longer
+# want to use volumes OR if I want to use this Dockerfile to push to prod
+
+CMD ["npm", "run", "start"]
